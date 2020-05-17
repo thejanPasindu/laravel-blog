@@ -34,6 +34,27 @@
         display: flex;
         align-items: center;
     }
+
+    blockquote {
+        background: #f9f9f9;
+        border-left: 10px solid #ccc;
+        margin: 1.5em 10px;
+        padding: 0.5em 10px;
+        quotes: "\201C""\201D""\2018""\2019";
+    }
+
+    blockquote:before {
+        color: #ccc;
+        content: open-quote;
+        font-size: 4em;
+        line-height: 0.1em;
+        margin-right: 0.25em;
+        vertical-align: -0.4em;
+    }
+
+    blockquote p {
+        display: inline;
+    }
 </style>
 
 <div class="container">
@@ -69,13 +90,17 @@
                         <hr>
 
                         <div class="row">
-                            <small class="col">{{ $post->created_at }}</small>
+                            <small class="col">{{ $post->created_at }}  by {{$post->user->name}}</small>
+
+                            @if (Auth::user()->id == $post->user_id)
                             <div class="col">
                                 <div class="float-right pull-right">
                                     <a href="/posts/{{$post->id}}/edit"><i class="fas fa-edit"></i></a>
                                     <a href="/posts/delete/{{$post->id}}"><i class="fas fa-trash-alt"></i></a>
                                 </div>
                             </div>
+                            @endif
+                            
 
                         </div>
 

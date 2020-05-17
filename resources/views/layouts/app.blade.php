@@ -33,8 +33,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li><a href="/posts">Posts </a></li>
-                        <li><a href="/posts/create"> Create Post</a></li>
+                    
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -55,7 +54,12 @@
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
+
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                                    <a class="dropdown-item" href="/home">Dashboard</a>
+                                    <a class="dropdown-item" href="/posts/create">Create Post</a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

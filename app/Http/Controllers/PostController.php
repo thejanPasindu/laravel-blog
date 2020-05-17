@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -41,6 +51,8 @@ class PostController extends Controller
             'body' => 'required',
         ]);
 
+        
+        $validatedData += ['user_id' => auth()->user()->id];
         $post = new Post($validatedData);
         $post->save();
         return redirect('/posts')->with('success', 'Post Created..!');
@@ -67,6 +79,10 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $data = Post::find($post->id);
+
+        if($data->user_id != auth()->user()->id){
+            return redirect('/posts')->with('error', 'Unathurized..!');
+        }
         return view('posts.edit')->with('post', $data);
     }
 
@@ -88,6 +104,8 @@ class PostController extends Controller
         $data = Post::find($id);
         $data->title = $request->title;
         $data->body = $request->body;
+        $data->user_id = auth()->user()->id;
+       
         $data->save();
         return redirect('/posts')->with('success', 'Post Updated..!');
     }
@@ -101,6 +119,11 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $data = Post::find($post->id);
+
+        if($data->user_id != auth()->user()->id){
+            return redirect('/posts')->with('error', 'Unathurized..!');
+        }
+        
         $data->delete();
         return redirect('/posts')->with('success', 'Post Deleted..!');
 
