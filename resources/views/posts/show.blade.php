@@ -83,6 +83,10 @@
 
                 <div class="card-body">
                     <div>
+                        <img style='width:100%;' src="/storage/cover_img/{{$post->cover_img}}" alt="">
+                    </div>
+
+                    <div>
                         {!! $post->body !!}
                     </div>
 
@@ -90,7 +94,7 @@
                         <hr>
 
                         <div class="row">
-                            <small class="col">{{ $post->created_at }}  by {{$post->user->name}}</small>
+                            <small class="col">{{ $post->created_at }} by {{$post->user->name}}</small>
 
                             @if (Auth::user()->id == $post->user_id)
                             <div class="col">
@@ -100,7 +104,7 @@
                                 </div>
                             </div>
                             @endif
-                            
+
 
                         </div>
 
